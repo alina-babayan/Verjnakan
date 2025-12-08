@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>main.qml</file>
+        <file>ForgotPasswordPage.qml</file>
+        <file>LoginPage.qml</file>
+        <file>MainDashboard.qml</file>
+        <file>OtpPage.qml</file>
+        <file>image.jpg.jpg</file>
+        <file>RegisterPage.qml</file>
+        <file>MainWindow.qml</file>
+        <file>DashboardPage.qml</file>
+        <file>SuccessPage.qml</file>
+        <file>SearchPage.qml</file>
+        <file>first</file>
+        <file>LoginSuccessPage.qml</file>
+    </qresource>
+</RCC>
