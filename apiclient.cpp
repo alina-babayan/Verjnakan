@@ -42,13 +42,18 @@ void ApiClient::get(const QString &url, QJSValue callback)
     sendRequest(request, QByteArray(), QNetworkAccessManager::GetOperation, callback);
 }
 
-void ApiClient::post(const QString &url, const QJsonObject &data, QJSValue callback)
-{
-    QNetworkRequest request(url);
-    attachToken(request);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    QByteArray body = QJsonDocument(data).toJson();
-    sendRequest(request, body, QNetworkAccessManager::PostOperation, callback);
+void ApiClient::post(const QString &url, const QJsonObject &data, QJSValue callback){
+    QNetworkRequest req{ QUrl(url) };       // <-- braces instead of parentheses
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    attachToken(req);
+
+    QNetworkReply *reply = m_manager->post(req, QJsonDocument(data).toJson());
+    connect(reply, &QNetworkReply::finished, this, [this, reply, callback]{
+        QJsonObject res = handleResponse(reply);
+        if(callback.isCallable())
+            callback.call(QJSValueList{ QJSValue(QString::fromUtf8(QJsonDocument(res).toJson())) });
+        reply->deleteLater();
+    });
 }
 
 void ApiClient::put(const QString &url, const QJsonObject &data, QJSValue callback)

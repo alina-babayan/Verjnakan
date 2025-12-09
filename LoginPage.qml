@@ -1,3 +1,64 @@
+// import QtQuick 2.15
+// import QtQuick.Controls 2.15
+// import QtQuick.Layouts 1.15
+
+// Rectangle {
+//     color: "white"
+
+//     RowLayout {
+//         anchors.fill: parent
+//         spacing: 0
+
+//         // LEFT - Form
+//         Rectangle {
+//             Layout.preferredWidth: 480
+//             Layout.fillHeight: true
+//             color: "#fafafa"
+
+//             Column {
+//                 anchors.centerIn: parent
+//                 width: 360
+//                 spacing: 32
+
+//                 Rectangle { width: 64; height: 64; radius: 16; color: "#1a1a1a"; anchors.horizontalCenter: parent.horizontalCenter
+//                     Text { text: "L"; color: "white"; font.pixelSize: 36; font.bold: true; anchors.centerIn: parent }
+//                 }
+
+//                 Text { text: "Welcome back to Lumin"; font.pixelSize: 28; color: "#1a1a1a"; anchors.horizontalCenter: parent.horizontalCenter }
+//                 Text { text: "Login with your email and password"; color: "#666"; anchors.horizontalCenter: parent.horizontalCenter }
+
+//                 Column {
+//                     width: parent.width
+//                     spacing: 20
+
+//                     TextField { placeholderText: "Enter your Email"; width: parent.width }
+//                     TextField { placeholderText: "Enter your Password"; echoMode: TextInput.Password; width: parent.width }
+
+//                     Button {
+//                         text: "Login"
+//                         width: parent.width
+//                         height: 56
+//                         background: Rectangle { radius: 12; color: "#1a1a1a" }
+//                         contentItem: Text { text: parent.text; color: "white"; font.bold: true; horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter }
+
+//                         onClicked: {
+//                             // Իմիտացնում ենք, որ պահանջվում է OTP
+//                             stack.push(otpPage, { maskedEmail: "j***@gmail.com" })
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+
+//         // RIGHT - Illustration
+//         Image {
+//             source: "qrc:new/prefix1/first"
+//             Layout.fillWidth: true
+//             Layout.fillHeight: true
+//             fillMode: Image.PreserveAspectFit
+//         }
+//     }
+// }
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
@@ -5,57 +66,77 @@ import QtQuick.Layouts 1.15
 Rectangle {
     color: "white"
 
-    RowLayout {
+    StackView {
+        id: stack
         anchors.fill: parent
-        spacing: 0
+    }
 
-        // LEFT - Form
+    Component {
+        id: loginPage
         Rectangle {
-            Layout.preferredWidth: 480
-            Layout.fillHeight: true
-            color: "#fafafa"
+            color: "white"
 
-            Column {
-                anchors.centerIn: parent
-                width: 360
-                spacing: 32
+            RowLayout {
+                anchors.fill: parent
+                spacing: 0
 
-                Rectangle { width: 64; height: 64; radius: 16; color: "#1a1a1a"; anchors.horizontalCenter: parent.horizontalCenter
-                    Text { text: "L"; color: "white"; font.pixelSize: 36; font.bold: true; anchors.centerIn: parent }
-                }
+                // LEFT - Form
+                Rectangle {
+                    Layout.preferredWidth: 480
+                    Layout.fillHeight: true
+                    color: "#fafafa"
 
-                Text { text: "Welcome back to Lumin"; font.pixelSize: 28; color: "#1a1a1a"; anchors.horizontalCenter: parent.horizontalCenter }
-                Text { text: "Login with your email and password"; color: "#666"; anchors.horizontalCenter: parent.horizontalCenter }
+                    Column {
+                        anchors.centerIn: parent
+                        width: 360
+                        spacing: 32
 
-                Column {
-                    width: parent.width
-                    spacing: 20
+                        Rectangle {
+                            width: 64; height: 64; radius: 16; color: "#1a1a1a"; anchors.horizontalCenter: parent.horizontalCenter
+                            Text { text: "L"; color: "white"; font.pixelSize: 36; font.bold: true; anchors.centerIn: parent }
+                        }
 
-                    TextField { placeholderText: "Enter your Email"; width: parent.width }
-                    TextField { placeholderText: "Enter your Password"; echoMode: TextInput.Password; width: parent.width }
+                        Text { text: "Welcome back to Lumin"; font.pixelSize: 28; color: "#1a1a1a"; anchors.horizontalCenter: parent.horizontalCenter }
+                        Text { text: "Login with your email and password"; color: "#666"; anchors.horizontalCenter: parent.horizontalCenter }
 
-                    Button {
-                        text: "Login"
-                        width: parent.width
-                        height: 56
-                        background: Rectangle { radius: 12; color: "#1a1a1a" }
-                        contentItem: Text { text: parent.text; color: "white"; font.bold: true; horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter }
+                        Column {
+                            width: parent.width
+                            spacing: 20
 
-                        onClicked: {
-                            // Իմիտացնում ենք, որ պահանջվում է OTP
-                            stack.push(otpPage, { maskedEmail: "j***@gmail.com" })
+                            TextField { id: emailField; placeholderText: "Enter your Email"; width: parent.width }
+                            TextField { id: passwordField; placeholderText: "Enter your Password"; echoMode: TextInput.Password; width: parent.width }
+
+                            Button {
+                                text: "Login"
+                                width: parent.width
+                                height: 56
+                                background: Rectangle { radius: 12; color: "#1a1a1a" }
+                                contentItem: Text { text: parent.text; color: "white"; font.bold: true; horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter }
+
+                                onClicked: {
+                                    // Մուտքի ստուգում (իմիտացիա)
+                                    stack.push(otpPage, { maskedEmail: emailField.text.replace(/(.).*(?=@)/, "$1***") })
+                                }
+                            }
                         }
                     }
                 }
+
+                // RIGHT - Illustration
+                Image {
+                    source: "qrc:new/prefix1/first"
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    fillMode: Image.PreserveAspectFit
+                }
             }
         }
-
-        // RIGHT - Illustration
-        Image {
-            source: "qrc:new/prefix1/first"
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            fillMode: Image.PreserveAspectFit
-        }
     }
+
+    Component {
+        id: otpPage
+        OtpPage { stack: stack }
+    }
+
+    // Այստեղ կարելի է ավելացնել successPage, registerPage և այլն
 }

@@ -1,35 +1,35 @@
-import QtQuick 6.5
-import QtQuick.Controls 6.5
-import QtQuick.Layouts 6.5
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 
-Item {
-    default property alias content: column.data
+Rectangle {
+    color: "white"
 
-    ColumnLayout {
-        id: column
+    Column {
         anchors.centerIn: parent
-        spacing: 30
+        spacing: 40
 
         Text {
-            text: message || "Success!"
-            font.pixelSize: 28
+            text: "Login Success!"
+            font.pixelSize: 36
             font.bold: true
-            color: "#198754"
-            Layout.alignment: Qt.AlignHCenter
+            color: "#1a1a1a"
+            anchors.horizontalCenter: parent.horizontalCenter
         }
 
         Text {
-            text: status || ""
-            font.pixelSize: 18
-            color: "#495057"
-            visible: status
-            Layout.alignment: Qt.AlignHCenter
+            text: "Welcome back!"
+            font.pixelSize: 20
+            color: "#555"
+            anchors.horizontalCenter: parent.horizontalCenter
         }
 
         Button {
-            text: "Continue →"
-            Layout.alignment: Qt.AlignHCenter
-            onClicked: stack.pop(null) // դուրս գալ բոլոր էջերից դեպի login
+            text: "Start Learning"
+            width: 300; height: 56
+            background: Rectangle { radius: 14; color: "#1a1a1a" }
+            contentItem: Text { text: parent.text; color: "white"; font.bold: true; font.pixelSize: 18; horizontalAlignment: Text.AlignHCenter }
+
+            onClicked: console.log("Բարի գալուստ Dashboard!")
         }
     }
 }
