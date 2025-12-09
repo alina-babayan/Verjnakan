@@ -6,7 +6,7 @@ ApplicationWindow {
     visible: true
     width: 1400
     height: 800
-    title: "Lumi"
+    title: "Lumin"
 
     StackView {
         id: stack
@@ -200,11 +200,11 @@ ApplicationWindow {
                             RowLayout {
                                 width: parent.width
                                 spacing: 0
-                                CheckBox {
-                                    id: rememberMe
-                                    text: "Remember Me"
-                                    font.pixelSize: 14
-                                }
+                                // CheckBox {
+                                //     id: rememberMe
+                                //     text: "Remember Me"
+                                //     font.pixelSize: 14
+                                // }
                                 Item { Layout.fillWidth: true }
                                 Text {
                                     text: "Forgot Password?"
